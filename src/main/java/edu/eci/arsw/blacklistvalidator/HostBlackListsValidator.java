@@ -6,6 +6,8 @@
 package edu.eci.arsw.blacklistvalidator;
 
 import edu.eci.arsw.spamkeywordsdatasource.HostBlacklistsDataSourceFacade;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -19,6 +21,21 @@ public class HostBlackListsValidator {
 
     private static final int BLACK_LIST_ALARM_COUNT=5;
     
+
+    public void dividirValores(int inter, int numHilos, List<serverSearch> listaHilos) {
+        int intervalo = inter / numHilos;
+        int inicio = 0;
+
+        for(serverSearch t : listaHilos) {
+            int fin = inicio + intervalo;
+            System.out.println("intervalo: inicio: " + inicio  +", Final: " + fin);
+            t.setNumeros(inicio,fin);
+            inicio = fin + 1;
+        }
+    }
+
+
+
     /**
      * Check the given host's IP address in all the available black lists,
      * and report it as NOT Trustworthy when such IP was reported in at least
@@ -29,7 +46,7 @@ public class HostBlackListsValidator {
      * @param ipaddress suspicious host's IP address.
      * @return  Blacklists numbers where the given host's IP address was found.
      */
-    public List<Integer> checkHost(String ipaddress){
+    public List<Integer> checkHost(String ipaddress, int maxHilosCorriendo){
         
         LinkedList<Integer> blackListOcurrences=new LinkedList<>();
         
@@ -38,7 +55,22 @@ public class HostBlackListsValidator {
         HostBlacklistsDataSourceFacade skds=HostBlacklistsDataSourceFacade.getInstance();
         
         int checkedListsCount=0;
-        
+
+        List<serverSearch> totalHilos= new ArrayList<serverSearch>();
+
+        int numberSvs = skds.getRegisteredServersCount();
+
+
+        for(int hilo = 0; hilo< maxHilosCorriendo;hilo++){
+            serverSearch h = new serverSearch(skds);
+            totalHilos.add(h);
+        }
+
+        dividirValores(numberSvs, totalHilos.size(), totalHilos);
+
+
+
+
         for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
             checkedListsCount++;
             
