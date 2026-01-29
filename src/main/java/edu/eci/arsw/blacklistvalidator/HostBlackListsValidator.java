@@ -62,25 +62,35 @@ public class HostBlackListsValidator {
 
 
         for(int hilo = 0; hilo< maxHilosCorriendo;hilo++){
-            serverSearch h = new serverSearch(skds);
+            serverSearch h = new serverSearch(skds,ipaddress);
             totalHilos.add(h);
         }
 
         dividirValores(numberSvs, totalHilos.size(), totalHilos);
 
 
+        for(serverSearch t :totalHilos ){
+            t.start();
+        }
 
-
-        for (int i=0;i<skds.getRegisteredServersCount() && ocurrencesCount<BLACK_LIST_ALARM_COUNT;i++){
-            checkedListsCount++;
-            
-            if (skds.isInBlackListServer(i, ipaddress)){
-                
-                blackListOcurrences.add(i);
-                
-                ocurrencesCount++;
+        
+        for (serverSearch t : totalHilos) {
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                Logger.getLogger(HostBlackListsValidator.class.getName()).log(Level.SEVERE, "Error al esperar que el hilo termine", e);
+                Thread.currentThread().interrupt();
             }
         }
+
+        for(serverSearch t : totalHilos){
+            int mientras = t.ocurrenciasEncontradas();
+            ocurrencesCount += mientras; 
+            blackListOcurrences.addAll(t.listasEncontradas());
+        }
+
+
+
         
         if (ocurrencesCount>=BLACK_LIST_ALARM_COUNT){
             skds.reportAsNotTrustworthy(ipaddress);
