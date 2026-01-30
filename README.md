@@ -81,6 +81,10 @@ tomando los tiempos de ejecución de los mismos):
 ![img1.png](img/img4.png)
 5. 100 hilos.
 ![img1.png](img/img5.png)
+6. grafica.
+   
+![img1.png](img/img6.png)
+
 
 
 **Parte IV - Ejercicio Black List Search**
