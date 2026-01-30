@@ -5,19 +5,27 @@
  */
 package edu.eci.arsw.blacklistvalidator;
 
-import java.util.List;
-
-/**
- *
- * @author hcadavid
- */
 public class Main {
-    
-    public static void main(String a[]){
-        HostBlackListsValidator hblv=new HostBlackListsValidator();
-        List<Integer> blackListOcurrences=hblv.checkHost("212.24.24.55",5);
-        System.out.println("The host was found in the following blacklists:"+blackListOcurrences);
-        
+
+    public static void main(String[] args) {
+
+        HostBlackListsValidator hblv = new HostBlackListsValidator();
+        String ip = "202.24.34.55";
+
+        int cores = Runtime.getRuntime().availableProcessors();
+        int[] pruebas = {1, cores, cores * 2, 50, 100};
+
+        System.out.println("Núcleos disponibles: " + cores);
+
+        for (int hilos : pruebas) {
+            long inicio = System.currentTimeMillis();
+            hblv.checkHost(ip, hilos);
+            long fin = System.currentTimeMillis();
+
+            System.out.println("Hilos: " + hilos +
+                               " | Tiempo(ms): " + (fin - inicio));
+        }
     }
-    
 }
+
+
