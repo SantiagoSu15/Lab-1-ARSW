@@ -12,6 +12,8 @@ Para esto se utilizaron los metodos run() y start() y se verifico el funcionamie
 Con start se ejecuta paralelamente 
 ![img1.png](img/image1.png)
 
+Con run secuencialmente
+![img1.png](img/secuencial.png)
 
 
 ## Parte II - Ejercicio Black List Search
@@ -56,6 +58,13 @@ Este método implementa la estrategia de paralelización mediante los siguientes
 4. **Recopilación de resultados:**
    - Consolida los resultados de todos los hilos, sumando las ocurrencias encontradas y agregando las listas negras detectadas
    - Evalúa si el total de ocurrencias alcanza el umbral `BLACK_LIST_ALARM_COUNT` para determinar si la IP es confiable o no
+
+202.24.34.55 reportado en listas negras
+![img1.png](img/blackList.png)
+
+
+212.24.24.55 No reportado en listas negras
+![img1.png](img/noBlackList.png)
 
 ## Parte II.I 
 
