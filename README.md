@@ -1,6 +1,9 @@
 
 ### Escuela Colombiana de Ingeniería
 ### Arquitecturas de Software - ARSW
+
+**Juan Felipe Rangel & Santiago Suarez**
+
 ## Ejercicio Introducción al paralelismo - Hilos - Caso BlackListSearch
 
 
@@ -16,7 +19,7 @@ Con run secuencialmente
 ![img1.png](img/secuencial.png)
 
 
-## Parte II - Ejercicio Black List Search
+## Parte II - Ejercicio Black List Search 
 
 La implementación utiliza programación concurrente con hilos para paralelizar la búsqueda de direcciones IP en múltiples listas negras. La solución se compone de dos clases principales:
 
