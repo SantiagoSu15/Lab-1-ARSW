@@ -9,6 +9,11 @@
 Durante este ejercicio se realizo la definicion e implementacion de hilos basicos con la funcion de imprimir numeros en intervalos definidos.
 Para esto se utilizaron los metodos run() y start() y se verifico el funcionamiento de los hilos con ambos metodos.
 
+Con start se ejecuta paralelamente 
+![img1.png](img/image1.png)
+
+
+
 ## Parte II - Ejercicio Black List Search
 
 La implementación utiliza programación concurrente con hilos para paralelizar la búsqueda de direcciones IP en múltiples listas negras. La solución se compone de dos clases principales:
@@ -40,7 +45,17 @@ Este método implementa la estrategia de paralelización mediante los siguientes
    - Obtiene el número total de servidores disponibles
    - Crea una lista para almacenar las ocurrencias encontradas
    - Obtiene la instancia de HostBlacklistsDataSourceFacade
+2. **Creación y distribución de hilos:**
+   - Crea `maxHilosCorriendo` instancias de `serverSearch`, cada una con la IP a verificar
+   - Utiliza el método `dividirValores()` para distribuir equitativamente el rango de servidores entre los hilos, asignando a cada `serverSearch` un intervalo específico mediante `setNumeros()`
 
+3. **Ejecución paralela:**
+   - Inicia todos los hilos con `start()` para que ejecuten la búsqueda simultáneamente
+   - Utiliza `join()` para esperar a que todos los hilos terminen antes de continuar
+
+4. **Recopilación de resultados:**
+   - Consolida los resultados de todos los hilos, sumando las ocurrencias encontradas y agregando las listas negras detectadas
+   - Evalúa si el total de ocurrencias alcanza el umbral `BLACK_LIST_ALARM_COUNT` para determinar si la IP es confiable o no
 
 ## Parte II.I 
 
